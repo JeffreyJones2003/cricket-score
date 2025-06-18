@@ -1,0 +1,27 @@
+<div class="container mt-4">
+  <h3 class="mb-4 text-center">📅 Upcoming Fixtures</h3>
+
+  <div *ngIf="loading" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && fixtures.length > 0" class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let match of fixtures">
+      <div class="card shadow-sm">
+        <div class="card-header bg-info text-white">
+          {{ match.name }}
+        </div>
+        <div class="card-body">
+          <p><strong>Date:</strong> {{ match.date | date:'mediumDate' }}</p>
+          <p><strong>Venue:</strong> {{ match.venue || 'TBA' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && fixtures.length === 0" class="text-center text-muted my-4">
+    No upcoming fixtures.
+  </div>
+</div>

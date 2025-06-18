@@ -1,0 +1,40 @@
+<div *ngIf="loading" class="text-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!loading && liveMatches.length > 0" class="container">
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col" *ngFor="let match of liveMatches">
+      <div class="card shadow-sm border-primary h-100">
+        <div class="card-header bg-primary text-white">
+          <strong>{{ match.name }}</strong>
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="d-flex align-items-center">
+              <img [src]="getTeamFlag(match.teamInfo[0].name)" alt="Team 1" width="30" class="me-2">
+              <span>{{ match.teamInfo[0].name }}</span>
+            </div>
+            <strong>{{ match.score[0]?.runs }}/{{ match.score[0]?.wickets }}</strong>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+              <img [src]="getTeamFlag(match.teamInfo[1].name)" alt="Team 2" width="30" class="me-2">
+              <span>{{ match.teamInfo[1].name }}</span>
+            </div>
+            <strong>{{ match.score[1]?.runs }}/{{ match.score[1]?.wickets }}</strong>
+          </div>
+        </div>
+        <div class="card-footer text-muted text-center">
+          {{ match.status }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && liveMatches.length === 0" class="text-center my-5">
+  <p>No live matches right now.</p>
+</div>
