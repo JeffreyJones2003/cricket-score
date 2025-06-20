@@ -1,27 +1,87 @@
-# LiveCricketScore
+# 🏏 Live Cricket Score App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+**Live Demo:** [https://live-cric-score-app.netlify.app/live-score](https://live-cric-score-app.netlify.app/live-score)
 
-## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+A modern Angular 17 web application that fetches and displays **live cricket scores**, **fixtures**, and **team performance statistics** using the [CricketData.org API](https://cricketdata.org/). The app is mobile-friendly, responsive, and built with reusable components.
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🚀 Features
 
-## Build
+- ✅ **Live Matches** – See ongoing international cricket matches with team flags and real-time scores.
+- 📅 **Fixtures** – Upcoming matches grouped by date, with team logos and venue info.
+- 📊 **Team Stats** – Visual charts (Bar/Pie) showing win percentages of ICC teams based on match type (T20, ODI, Test).
+- 🔄 **Match Type Filters** – Easily filter fixtures or stats by match format.
+- 🎨 Responsive UI with Bootstrap and chart animations.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🛠️ Tech Stack
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+| Technology     | Description                        |
+|----------------|------------------------------------|
+| Angular 17     | Frontend Framework                 |
+| TypeScript     | Component logic                    |
+| ng2-charts     | Chart.js wrapper for Angular       |
+| Bootstrap 5    | Styling and responsive layout      |
+| CricketData API| Cricket data source (JSON-based)   |
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🖼️ Screenshots
 
-## Further help
+### 🟢 Live Scores
+![Live Score Screenshot](./screenshots/live-score.png)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 📅 Fixtures Page
+![Fixtures Screenshot](./screenshots/fixtures.png)
+
+### 📊 Team Statistics
+![Stats Screenshot](./screenshots/team-stats.png)
+
+> *(Include real screenshots from your running app here.)*
+
+---
+
+## 🔧 Setup Instructions
+
+```bash
+git clone https://github.com/your-username/live-cricket-score.git
+cd live-cricket-score
+npm install
+ng serve
+
+Visit http://localhost:4200 in your browser.
+
+📦 API Reference
+	•	GET /v1/currentMatches – Live match data
+	•	GET /v1/players_info?id=... – Player & team stats
+	•	GET /v1/match_info?id=... – Full match details
+
+Powered by: CricketData.org
+
+📌 Folder Structure
+
+src/app/
+  ├── components/
+  │     ├── live-score/
+  │     ├── fixtures/
+  │     └── team-stats/
+  ├── services/
+  │     └── cricket.service.ts
+
+💡 Future Enhancements
+	•	🧠 NLP-based search for players or teams
+ 	•	🔔 Notifications for live match updates
+
+👨‍💻 Author
+
+Jeffrey Jones S
+📧 jefffj10@gmail.com
+🌐 LinkedIn: https://www.linkedin.com/in/jeffrey-jones-s-b2a84524b/
+🔗 GitHub:   https://github.com/JeffreyJones2003
+
+📝 License
+
+This project is licensed under the MIT License.
