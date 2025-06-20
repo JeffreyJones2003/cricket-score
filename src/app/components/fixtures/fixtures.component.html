@@ -1,27 +1,65 @@
-<div class="container mt-4">
-  <h3 class="mb-4 text-center">📅 Upcoming Fixtures</h3>
+<div class="container py-4">
+  <h4 class="mb-4">📅 Upcoming Fixtures</h4>
 
-  <div *ngIf="loading" class="text-center my-4">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
+  <!-- Match Type Selector -->
+  <div class="d-flex align-items-center mb-3 gap-3">
+    <label class="form-label fw-bold mb-0">Match Type:</label>
+    <!-- <select class="form-select w-auto"
+            (change)="setMatchType(($event.target as HTMLSelectElement).value)">
+      <option value="t20">T20</option>
+      <option value="odi">ODI</option>
+      <option value="test">Test</option>
+    </select> -->
+
+    <select #typeSelector (change)="setMatchType(typeSelector.value)" class="form-select w-auto">
+  <option value="t20">T20</option>
+  <option value="odi">ODI</option>
+  <option value="test">Test</option>
+</select>
   </div>
 
-  <div *ngIf="!loading && fixtures.length > 0" class="row row-cols-1 row-cols-md-2 g-4">
-    <div class="col" *ngFor="let match of fixtures">
-      <div class="card shadow-sm">
-        <div class="card-header bg-info text-white">
-          {{ match.name }}
-        </div>
-        <div class="card-body">
-          <p><strong>Date:</strong> {{ match.date | date:'mediumDate' }}</p>
-          <p><strong>Venue:</strong> {{ match.venue || 'TBA' }}</p>
+  <!-- Loading Spinner -->
+  <div *ngIf="loading()" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <!-- No Data Message -->
+  <div *ngIf="!loading() && groupedFixtures().size === 0" class="text-center text-muted">
+    No fixtures found for this match type.
+  </div>
+
+  <!-- Fixtures by Date -->
+  <div *ngIf="!loading()">
+    <div *ngFor="let date of groupedFixtures().keys()">
+      <h5 class="text-primary fw-bold border-bottom pb-1">{{ date }}</h5>
+      <div class="row row-cols-1 row-cols-md-2 g-4 mb-4">
+        <div class="col" *ngFor="let match of groupedFixtures().get(date)">
+          <div class="card border-info shadow-sm">
+            <div class="card-header bg-info text-white fw-bold">
+              {{ match.name }}
+            </div>
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-2" *ngIf="match.teamInfo?.length >= 2">
+                <div class="d-flex align-items-center">
+                  <img [src]="match.teamInfo[0]?.img" alt="team1" width="32" class="me-2" />
+                  {{ match.teamInfo[0]?.name }}
+                </div>
+                <span>vs</span>
+                <div class="d-flex align-items-center">
+                  <img [src]="match.teamInfo[1]?.img" alt="team2" width="32" class="me-2" />
+                  {{ match.teamInfo[1]?.name }}
+                </div>
+              </div>
+              <p class="mb-0">
+                <strong>Venue:</strong> {{ match.venue || 'TBD' }}
+              </p>
+              <p class="mb-0">
+                <strong>Time:</strong> {{ match.dateTimeGMT | date: 'shortTime' }} GMT
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <div *ngIf="!loading && fixtures.length === 0" class="text-center text-muted my-4">
-    No upcoming fixtures.
   </div>
 </div>

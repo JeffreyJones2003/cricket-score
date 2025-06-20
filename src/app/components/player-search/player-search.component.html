@@ -1,0 +1,62 @@
+<div class="container mt-4">
+  <h3 class="mb-3">🔍 Search Players</h3>
+
+  <div class="input-group mb-3">
+    <input [(ngModel)]="keyword" type="text" class="form-control" placeholder="Enter player name" />
+    <button class="btn btn-primary" (click)="search()">Search</button>
+  </div>
+
+  <div *ngIf="loading" class="text-center">
+    <div class="spinner-border text-info" role="status"></div>
+  </div>
+
+  <div *ngIf="players.length" class="list-group">
+    <button
+      *ngFor="let player of players"
+      class="list-group-item list-group-item-action"
+    >
+      {{ player.name }} ({{ player.country }})
+    </button>
+  </div>
+
+  <div *ngIf="!loading && players.length === 0 && keyword" class="text-muted text-center">
+    No players found.
+  </div>
+</div>
+
+<!-- Player Details -->
+<div *ngIf="selectedPlayer" class="card mt-4 p-4 shadow">
+  <div class="d-flex align-items-center mb-3">
+    <img [src]="selectedPlayer.playerImg" width="80" height="80" class="me-3 border rounded" />
+    <div>
+      <h4>{{ selectedPlayer.name }}</h4>
+      <p class="mb-0"><strong>Country:</strong> {{ selectedPlayer.country }}</p>
+      <p class="mb-0"><strong>Role:</strong> {{ selectedPlayer.role }}</p>
+      <p class="mb-0"><strong>Batting:</strong> {{ selectedPlayer.battingStyle }}</p>
+      <p class="mb-0"><strong>Bowling:</strong> {{ selectedPlayer.bowlingStyle }}</p>
+      <p class="mb-0"><strong>DOB:</strong> {{ selectedPlayer.dateOfBirth | date }}</p>
+    </div>
+  </div>
+
+  <div *ngFor="let type of objectKeys(selectedPlayer.groupedStats)">
+    <h5 class="mt-3 text-capitalize">{{ type }} Stats</h5>
+    <table class="table table-sm table-bordered">
+      <thead class="table-light">
+        <tr>
+          <th>Type</th>
+          <th>Stat</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of selectedPlayer.groupedStats[type]">
+          <td>{{ s.fn }}</td>
+          <td>{{ s.stat }}</td>
+          <td>{{ s.value }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn btn-secondary mt-3" (click)="selectedPlayer = null">🔙 Back to Results</button>
+</div>

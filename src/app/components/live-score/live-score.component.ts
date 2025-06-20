@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { CricketService } from '../../services/cricket.service';
 import { CommonModule } from '@angular/common';
 
@@ -7,7 +8,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   templateUrl: './live-score.component.html',
   styleUrls: ['./live-score.component.css'],
-  imports: [CommonModule]  
+  imports: [CommonModule,RouterModule]  
 })
 
 export class LiveScoreComponent implements OnInit {
@@ -16,32 +17,19 @@ export class LiveScoreComponent implements OnInit {
 
   constructor(private cricketService: CricketService) {}
 
-  ngOnInit(): void {
-    this.cricketService.getLiveScores().subscribe({
-      next: (res: any) => {
-        this.liveMatches = res?.data?.filter((m: any) => m?.status?.toLowerCase() === 'live') || [];
-        this.loading = false;
-      },
-      error: (err: any) => {
-        console.error('Error fetching live scores:', err);
-        this.loading = false;
-      }
-    });
-  }
+ngOnInit(): void {
+  this.loading = true;
 
-  getTeamFlag(teamName: string): string {
-    const flags: { [key: string]: string } = {
-      India: 'https://flagcdn.com/in.svg',
-      Australia: 'https://flagcdn.com/au.svg',
-      England: 'https://flagcdn.com/gb.svg',
-      Pakistan: 'https://flagcdn.com/pk.svg',
-      'South Africa': 'https://flagcdn.com/za.svg',
-      'Sri Lanka': 'https://flagcdn.com/lk.svg',
-      'New Zealand': 'https://flagcdn.com/nz.svg',
-      Bangladesh: 'https://flagcdn.com/bd.svg',
-      Afghanistan: 'https://flagcdn.com/af.svg',
-      'West Indies': 'https://flagcdn.com/jm.svg'
-    };
-    return flags[teamName] || 'https://via.placeholder.com/30x20';
-  }
+  this.cricketService.getLiveScores().subscribe({
+    next: (res: any) => {
+      console.log('Live matches:', res.data);
+      this.liveMatches = res.data?.slice(0, 8) || []; // limit to 8 matches
+      this.loading = false;
+    },
+    error: (err: any) => {
+      console.error('Error loading matches', err);
+      this.loading = false;
+    }
+  });
+}
 }

@@ -1,0 +1,41 @@
+<div *ngIf="loading" class="text-center my-5">
+  <div class="spinner-border text-info" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!loading && match">
+  <div class="card border-info mb-4 shadow-sm">
+    <div class="card-header bg-info text-white">
+      <h5 class="mb-0">{{ match.name }}</h5>
+    </div>
+    <div class="card-body">
+      <p><strong>Status:</strong> {{ match.status }}</p>
+      <p><strong>Match Type:</strong> {{ match.matchType | uppercase }}</p>
+      <p><strong>Venue:</strong> {{ match.venue }}</p>
+      <p><strong>Date:</strong> {{ match.date | date }}</p>
+      <p><strong>Toss:</strong> {{ match.tossWinner }} won the toss and chose to {{ match.tossChoice }}</p>
+
+      <div class="row mt-4">
+        <div class="col-md-6" *ngFor="let team of match.teamInfo; let i = index">
+          <div class="card h-100">
+            <div class="card-body d-flex align-items-center">
+              <img [src]="team.img" class="me-3" width="40" height="40" />
+              <div>
+                <h6 class="mb-1">{{ team.name }}</h6>
+                <small *ngIf="match.score[i]">
+                  {{ match.score[i]?.r }}/{{ match.score[i]?.w }} ({{ match.score[i]?.o }} ov)
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && error" class="alert alert-danger text-center">
+  {{ error }}
+</div>
